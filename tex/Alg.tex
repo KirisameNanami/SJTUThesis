@@ -61,4 +61,62 @@ $$|K'|=|K|-|X|+|\Gamma(X)|=|K|-(|X|-|\Gamma(X)|)$$
 因此，一个子密钥集合$K$的实际密钥信息的值等于由$U=K$构造出的二分图$G(U,V,E)$的最大匹配的值，且实际密钥信息集合为$K'_{min}=\Gamma(X_{max})\cup(K\backslash X_{max})$，其中$X_{max}$是使$|X|-|\Gamma(X)|$最大的$X$。
 
 \section{AKI-最小割算法}
-aaaaa
+上一章中提到的单轮加密的AKI只限于计算两轮之间的AKI值，无法将整个密码函数整体考虑。
+黄佳琳博士在\citen{huang2014revisiting}中提到的AKI算法即为每次将密钥依赖路径中的一部分比特同时推至同一轮，考虑与同一轮比特之间的关系，这将会导致一些遗漏，下文将会提到其中的一个反例（该反例同样适用于Lin在\citen{lin2016automatic}提到的密钥桥算法）。
+为了寻找一般情况下一个猜测集合的实际密钥信息集合，我们需要将单轮的特殊情况推向多轮的一般情况。
+\subsection{一个简单的反例}
+如果将猜测集合$K$中大于$r$轮的所有密钥都推到第$r$轮，同时考虑这些密钥与第$r$轮之间的依赖关系，使用上一节提到的二分图匹配算法寻找密钥信息集合，这将会遗漏一些特殊情况：
+由于在这种情况下，密钥信息集合只可能取第$r$轮上的比特或是$K$中的比特，完全不考虑$r$轮之后的不在$K$中的比特，这很容易导致遗漏更小的密钥信息集合。
+图\ref{fig:counter}提供了一个2轮密钥编排方案的反例，其中$K$为$r_2$轮上的3个比特。
+在该反例中，无论是单独考虑$K$与$r_1$轮的密钥还是单独考虑$K$与$r_0$轮的密钥，都无法得出正确的实际密钥信息集合，因为真正的实际密钥信息集合中包含了分布在$r_0$和$r_1$两轮上的不同的比特。
+因此，我们需要将所有轮密钥上涉及的比特统一考虑，才不会遗漏这种特殊情况。
+\begin{figure}
+    \centering
+    \includegraphics[height=3.3cm]{counter}
+    \bicaption[fig:counter]{反例}{一个两轮密钥编排方案的反例，其中灰色的点代表猜测集合$K$，黑色的点是其实际蜜月信息集合。}{Counterexample}{The counterexample with a 2-round schedule. The bits in $K$ are filled with grey and the AKI-set bits are filled with black.}
+\end{figure}
+\subsection{最大流问题与最大流-最小割定理}
+为了将所有轮密钥上的比特统一考虑，我们需要一个适用更加一般的情况的算法。
+在图论中，二分图匹配问题是网络流最大流问题的一个特殊情况，因此我们猜想，真正的AKI算法将会使用网络流作为媒介来量化整个密钥编排方案。
+在这一节中，我们将简单地介绍最大流问题以及最大流理论中非常重要的一个定理。
+\begin{defn}[流量网络]
+    一个连通的赋权有向图$G_f(V,E,c)$被成为一个流量网络（或容量网络），其中$c$是弧上的容量，并满足：
+    \begin{enumerate}
+        \item $c(u,v)$ 代表有向边$e=(u,v)$上的容量。如果$e\notin E$，则$c(u,v)=0$。
+        \item 顶点集合中$V$有两个特殊的顶点$s$和$t$分别代表源点与汇点，并满足$\forall(u,v)\in E,u\neq t,v\neq s$（即不存在以t为起始或以s为终点的有向边）。
+    \end{enumerate}
+\end{defn}
+\begin{defn}[流]
+    一股流是一个对于所有顶点$u$和$v$都有以下特性的实数函数$f:V^2\rightarrow R$：
+    \begin{enumerate}
+        \item 容量限制（Capacity Constrains）：$f(u,v)\leq c(u,v)$，即弧上的流不能超过该弧的容量；
+        \item 斜对称（Skew Symmetry）：$f(u,v)=-f(v,u)$，即由$u$到$v$的净流必须是由$v$到$u$净流的相反。
+        \item 流守恒（Flow Conservation）：除非$u=s$或$u=t$，否则$\sum_{v\in V}f(u,v)=0$，即除了源点与汇点以外的所有点流出的流量为0。
+    \end{enumerate}
+    流$f$的大小定义为$val(f)=\sum_{u\in V}f(s,u)$。
+\end{defn}
+最大流问题旨在流量网络$G_f(V,E,c)$中寻找一个最大的流$f$。目前有很多解决该问题的算法，例如Ford-Fulkerson算法\citen{ford1956maximal}，预留推进算法，Dinic算法\citen{dinits1970algorithms}等。
+
+最大流问题的对偶问题——最小割问题，同样是十分著名的图论问题之一。
+\begin{defn}[割]
+    设$S$和$T$为流量网络$G_f(V,E,c)$顶点集合$V$的一个分割，即$S\cup T=V$且$S\cap T=\varnothing$，并满足$s\in S,t\in T$，则称$C=(S,T)$为流量网络$G_f$的一个割。
+    其中割$C(S,T)$的大小定义为：
+    $$cap(C)=\sum_{(u,v)\in E,u\in S,v\in T}c(u,v),$$
+    即为$G_f$中所有从$S$到$T$的弧的容量总和。
+\end{defn}
+\begin{figure}[htbp]
+\centering
+    \includegraphics[height=4.5cm]{flowcut}
+    \bicaption[fig:flowcut]{最大流与最小割}{一个流量网络的样例中的最大流（左图加粗的边和括号中的数字）和最小割（右图的虚线）}{Max-flow and Min-cut}{An exmaple flow network with its capacities and one of its max-flow (the bold edges and enclosed numbers) and its min-cut (the dotted line)}
+\end{figure}
+而最大流问题与最小割问题的对偶关系可以由网络流理论中著名的最大流-最小割定理来说明：
+\begin{thm}[最大流-最小割定理\citen{papadimitriou19986}]
+    在一个流量网络$G_f(V,E,c)$中，最大流的大小等于最小割的大小。
+\end{thm}
+
+\section{算法描述}
+通过上一节关于最大流与最小割问题的介绍，我们大致了解了最大流与最小割的含义与性质。
+在这一节中，我们将介绍一个全新的基于最大流最小割理论的AKI算法——AKI-最小割算法。
+该算法旨在将密钥编排方案（用其密钥依赖矩阵$M$表示）和猜测集合$K$转化为一个流量网络$G_f(E,V,c)$，然后在该网络上求最小割来寻找实际蜜月信息集合。
+
+为了建立
