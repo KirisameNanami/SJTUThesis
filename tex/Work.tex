@@ -100,7 +100,7 @@ RCTANGLE-128已经在第\ref{chap:App}章中简要介绍过了，在此不再赘
 \hline
 &\multicolumn{2}{c|}{RECTANGLE-80\quad}&\multicolumn{2}{c|}{PRESENT-80}&\multicolumn{2}{c|}{RECTANGLE-128\quad}&\multicolumn{2}{c}{PRESENT-128}\\
 \hline
-&理论值&\quad $AKI$&理论值&\quad $AKI$&理论值&\quad $AKI$&理论值&\quad $AKI$\\
+&$TKI$&\quad $AKI$&$TKI$&\quad $AKI$&$TKI$&\quad $AKI$&$TKI$&\quad $AKI$\\
 $r=1$&4&4&4&4&4&4&4&4\\
 $r=2$&20 & \textcolor{red}{18}&20 &20&20& \textcolor{red}{18}  &20 &20\\
 $r=3$&56 &\textcolor{red}{42} &80 &\textcolor{red}{64}&56 &\textcolor{red}{44}  &84 &\textcolor{red}{77}\\
@@ -143,7 +143,7 @@ LED的密钥编排方案十分简单，甚至可以说没有密钥编排方案�
 \hline
 &\multicolumn{2}{c|}{Midori-64\quad}&\multicolumn{2}{c|}{Midori-128}&\multicolumn{2}{c|}{LED-64\quad}&\multicolumn{2}{c}{LED-128}\\
 \hline
-&理论值&\quad $AKI$&理论值&\quad $AKI$&理论值&\quad $AKI$&理论值&\quad $AKI$\\
+&$TKI$&\quad $AKI$&$TKI$&\quad $AKI$&$TKI$&\quad $AKI$&$TKI$&\quad $AKI$\\
 $r=1$&25&\textcolor{red}{24}&13&\textcolor{red}{12}&64&64&64&64\\
 $r=2$&85 &\textcolor{red}{72}&77 &\textcolor{red}{60}&64& \textbf{64}  &128 &\textbf{128}\\
 $r=3$&128 &\textbf{128} &128 &\textcolor{red}{124}&- &- &- &-\\
@@ -199,7 +199,7 @@ SIMON拥有很多不同的版本，有各自不同的分组长度和主密钥长
 \hline
 &\multicolumn{2}{c}{SIMON}\\
 \hline
-&理论值&$AKI$\\
+&$TKI$&$AKI$\\
 \hline
 $r=1$ & 1 & 1\\
 $r=2$ & 4 & 4\\
@@ -215,5 +215,5 @@ $r=8$ & 64 & \textbf{64}\\
 \end{table}
 
 确定了两个矩阵的表示方法后，我们通过算法\ref{alg:AKI}的到SIMON的AKI，见表\ref{tab:SIMON}。
-从表中可以看出，SIMON的理论值增长较慢，但前6轮都不存在密钥信息泄露，直到第7轮，密钥依赖路径的长度达到了$66>64$，但出现了3比特的密钥信息泄露，使得第7轮的AKI并没有达到理论最大值。
+从表中可以看出，SIMON的TKI增长较慢，但前6轮都不存在密钥信息泄露，直到第7轮，密钥依赖路径的长度达到了$66>64$，但出现了3比特的密钥信息泄露，使得第7轮的AKI并没有达到理论最大值。
 
