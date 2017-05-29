@@ -47,9 +47,10 @@
 
 
 \frontmatter 	% 使用罗马数字对前言编号
+\pagestyle{front}
+\begin{bigfront}
 
 %% 摘要
-\pagestyle{main}
 \include{tex/abstract}
 
 %% 目录、插图目录、表格目录
@@ -62,17 +63,24 @@
 \addcontentsline{toc}{chapter}{算法索引}        %将算法目录加入全文目录
 
 \include{tex/symbol} % 主要符号、缩略词对照表
+\end{bigfront}
 
 \mainmatter	% 使用阿拉伯数字对正文编号
 
-%% 正文内容
 \pagestyle{main}
+%% 正文内容
 %\include{tex/intro}
 %\include{tex/example}
 %\include{tex/faq}
 %\include{tex/summary}
+\include{tex/Pre}
+\include{tex/Intro}
 \include{tex/AKI}
 \include{tex/Alg}
+\include{tex/App}
+\include{tex/Design}
+\include{tex/Work}
+\include{tex/Con}
 
 \appendix	% 使用英文字母对附录编号，重新定义附录中的公式、图图表编号样式
 \renewcommand\theequation{\Alph{chapter}--\arabic{equation}}	
@@ -81,10 +89,11 @@
 \renewcommand\thealgorithm{\Alph{chapter}--\arabic{algorithm}}
 
 %% 附录内容，本科学位论文可以用翻译的文献替代。
-\include{tex/app_setup}
-\include{tex/app_eq}
-\include{tex/app_cjk}
-\include{tex/app_log}
+%\include{tex/app_setup}
+%\include{tex/app_eq}
+%\include{tex/app_cjk}
+%\include{tex/app_log}
+\include{tex/app_A}
 
 \backmatter	% 文后无编号部分 
 
@@ -100,9 +109,9 @@
 % http://www.gs.sjtu.edu.cn/inform/3/2015/20151120_123928_738.htm
 
 % 盲审删去删去致谢页
-\ifsjtu@review\relax\else
+%\ifsjtu@review\relax\else
   \include{tex/ack} 	  %% 致谢
-\fi
+%\fi
 
 \ifsjtu@bachelor
   % 学士学位论文要求在最后有一个英文大摘要，单独编页码

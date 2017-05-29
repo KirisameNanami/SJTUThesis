@@ -436,6 +436,14 @@
 % fancyhdr页眉页脚设置
 \ifsjtu@bachelor
 	% 本科学位论文页眉页脚设置
+	%% 前言页眉页脚
+	\fancypagestyle{front}{
+	  \fancyhf{}
+	  \fancyhead[L]{\includegraphics[width=0.22\textwidth]{figure/sjtubanner}}
+	  \fancyhead[R]{\nouppercase{\small\kaishu\sjtu@value@titlemark}}
+	  \fancyfoot[C]{\small 第~{\bfseries\thepage}~页\,共~{\bfseries\pageref{frontlast}}~页}
+	  \renewcommand{\headheight}{32pt}
+	}
 	%% 正文页眉页脚
 	\fancypagestyle{main}{
 	  \fancyhf{}
@@ -604,12 +612,29 @@
   {\chapter{\sjtu@label@thanks}\label{last}}
   {}
 
+\newenvironment{symbollist}
+{\chapter{\sjtu@label@symbollist}}
+{\label{frontlast}}
+
+
 \newenvironment{summary}
 {\chapter*{\sjtu@label@summary\markboth{\sjtu@label@summary}{}}\addcontentsline{toc}{chapter}{\sjtu@label@summary}
 }{}
 
 \newenvironment{symbolnote}{\chapter{\sjtu@label@symbolnote}
 }{}
+
+\newenvironment{bigfront}
+{
+\fancypagestyle{plain}{% 设置开章页页眉页脚风格(只有页码作为页脚)
+	  \fancyhf{}
+	  \fancyhead[L]{\nouppercase{\small\kaishu\includegraphics[width=0.22\textwidth]{figure/sjtubanner}}}
+	  \fancyhead[R]{\nouppercase{\small\kaishu\sjtu@value@titlemark}}
+	  \fancyfoot[C]{\small 第~{\bf\thepage}~页\,共~{\bf\pageref{frontlast}}~页}
+	  \renewcommand{\headheight}{32pt}
+	}
+}
+{}
 
 \newenvironment{bigabstract}
 {

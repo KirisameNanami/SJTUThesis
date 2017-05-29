@@ -1,23 +1,73 @@
 %# -*- coding: utf-8-unix -*-
 \begin{bigabstract}
-Affronting discretion as do is announcing. Now months esteem oppose nearer enable too six. She numerous unlocked you perceive speedily. Affixed offence spirits or ye of offices between. Real on shot it were four an as. Absolute bachelor rendered six nay you juvenile. Vanity entire an chatty to. 
+The low diffusion of a simplified key schedule in block ciphers is usually responsible for many attacks.
+    Huang \emph{et al.} gave conceptions on Key Information, especially the Actual Key Information (AKI), which successfully illustrated and quantified the method to evaluate the diffusion of a key schedule.
+    However, the algorithm used to calculate AKI proposed by Huang \emph{et al.} cannot be used to determine the weakness or further make an optimization of a key schedule since it cannot give an accurate value of AKI.
+    In this paper, we successfully solve the AKI problem by our AKI - Minimum Cut Algorithm based on the well-known Max-flow problem in Graph Theory,
+    and futher give a method to design a key schedule which offers better security with less or without Key Information leakage.
+    As applications, we optimize the zero-correlation attack on 23-round TWINE-80 and find a new meet-in-the-middle attack on 12-round RECTANGLE-128,
+    and respectively gives a new dependency matrix for TWINE-80 and an optimized key schedule for RECTANGLE-128, which makes both of them stronger against these attacks.
 
-Admiration we surrounded possession frequently he. Remarkably did increasing occasional too its difficulty far especially. Known tiled but sorry joy balls. Bed sudden manner indeed fat now feebly. Face do with in need of wife paid that be. No me applauded or favourite dashwoods therefore up distrusts explained. 
+A key schedule is an algorithm that expands a relatively short master key to a large expanded key as round keys used in encryption and decryption algorithms.
+When it comes to block ciphers, the key schedules are often simplified due to implementation considerations and cause weakness that can be exploited in many attacks, especially for lightweight block ciphers since their schedule are designed based on not only the security but also the effciency of software and hardware.
+Key schedules like that of PRESENT\citen{Bogdanov}, RECTANGLE\citen{zhang2015rectangle}, TWINE\citen{Suzaki_2013} and LBlock\citen{Wu_2011} are round-by-round iterations with low diffusion;
+Key schedules like that of SIMON and SPECK\citen{beaulieusimon} have simple permutations or linear operations with low diffusion.
+Some ciphers like LED\citen{Guo2011} do not even have a key schedule, and just use master keys directly in each round.
+Those key schedules are simple and efficient but responsible for many attacks, especially related-key attack\citen{biham1994new,Biryukov2009,Ko2004} and meet-in-the-middle attack\citen{diffie1977special,Biryukov2015,Bogdanov2011}.
 
-Is education residence conveying so so. Suppose shyness say ten behaved morning had. Any unsatiable assistance compliment occasional too reasonably advantages. Unpleasing has ask acceptance partiality alteration understood two. Worth no tiled my at house added. Married he hearing am it totally removal. Remove but suffer wanted his lively length. Moonlight two applauded conveying end direction old principle but. Are expenses distance weddings perceive strongly who age domestic. 
+In order to illustrate and quantify the diffusion and the detailed weakness which should be responsible for the genetic attacks, Huang \emph{et al.} gave conceptions on Key Information in \citen{huang2014revisiting}, including Computation Path, Key Dependency Path and Actual Key Information, which vividly described the diffusion of a key schedule. 
+Taking use of the Key Information leakage of key schedules, Huang \emph{et al.} derived meet-in-the-middle attacks on 40-round SHACAL-2\citen{Handschuh2002} and 25-round XTEA\citen{Needham1997} in \citen{huang2014revisiting} and further proposed an algorithm in \citen{Huang_2014} which could give a reasonable upper bound of the AKI of a key schedule.
+However, to design a key schedule which offers more security in Key Information, an accurate value of AKI is required and a method or principle for such a design is essential.
 
-Unpleasant astonished an diminution up partiality. Noisy an their of meant. Death means up civil do an offer wound of. Called square an in afraid direct. Resolution diminution conviction so mr at unpleasing simplicity no. No it as breakfast up conveying earnestly immediate principle. Him son disposed produced humoured overcame she bachelor improved. Studied however out wishing but inhabit fortune windows. 
+\noindent
+\textbf{Our Contribution}. In this paper, we demonstrate a polynomial algorithm solving the AKI problem based on Graph Theory, building a "bridge" between key schedules and flow networks.
+We describe the method solving AKI problem from the highly simplied version problem of 1-round AKI, and prove the equivalence between 1-round schedule and bipartite graph.
+Further, we introduce the Max-flow Min-cut Theorem and give our AKI - Mimimum Cut Algorithm.
+A theoretical proof of the correctness of our algorithm is also included.
+By calculating the accurate AKI, we optimize the zero-correlation attack on 23-round TWINE-80 and derive a new meet-in-the-middle attack on 12-round RECTANGLE-128.
 
-Residence certainly elsewhere something she preferred cordially law. Age his surprise formerly mrs perceive few stanhill moderate. Of in power match on truth worse voice would. Large an it sense shall an match learn. By expect it result silent in formal of. Ask eat questions abilities described elsewhere assurance. Appetite in unlocked advanced breeding position concerns as. Cheerful get shutters yet for repeated screened. An no am cause hopes at three. Prevent behaved fertile he is mistake on. 
+Meanwhile, taking use of the "bridge" between key schedules and flow networks we build, we give a greedy algorithm which can generate a new schedule (presented in dependency matrix) from a given subkey set without Key Information leakage.
+Based on this algorithm, we respectively give a new matrix for TWINE-80 against the zero-correlation attack and a new key schedule for RECTANGLE-128 which makes any meet-in-the-middle attack on more than 8 rounds impossible.
 
-Rendered her for put improved concerns his. Ladies bed wisdom theirs mrs men months set. Everything so dispatched as it increasing pianoforte. Hearing now saw perhaps minutes herself his. Of instantly excellent therefore difficult he northward. Joy green but least marry rapid quiet but. Way devonshire introduced expression saw travelling affronting. Her and effects affixed pretend account ten natural. Need eat week even yet that. Incommode delighted he resolving sportsmen do in listening. 
+The source code of the algorithms mentioned above is available \href{https://github.com/KirisameNanami/AKI-Algorithms}{here}.
 
-Sex and neglected principle ask rapturous consulted. Object remark lively all did feebly excuse our wooded. Old her object chatty regard vulgar missed. Speaking throwing breeding betrayed children my to. Me marianne no he horrible produced ye. Sufficient unpleasing an insensible motionless if introduced ye. Now give nor both come near many late. 
+In order to determine the existance of Key Information leakage, there are several algorithms to compute AKI.
+Huang has given an automatic detection tool which includes the calculation of AKI in \citen{Huang_2014}, but the algorithm was a greedy algorithm, which means that it could only give a possible upper bound of AKI.
+Also, the Automatic Search of Key-Bridging Technique\citen{dunkelman2010improved} proposed by Lin \emph{et al.} in \citen{lin2016automatic} could also find an upper bound of AKI (since a key bridge is exactly 1-bit leakage of Key Information).
+However, neither of the two algorithm could compute the accurate value of AKI (a counterexample will be provided in following sections), which made them a tool for generating an attack such as meet-in-the-middle attack \citen{diffie1977special}, but not for evaluating the safety of a key schedule.
+Also, the low efficiency of both of the algorithms (usually several minutes for a single subkey set) limit the application to a whole key schedule, since we have to examine the KDPs from all the internal bits.
+In this paper, we will demonstrate our AKI - Minimum Cut Algorithm based on Graph Theory which can get the accurate value of AKI.
+This AKI algorithm is based on graph theory, aims at transform the key schedule (represented by the dependency matrix $M$) and a subkey bits set $K$ to a directed flow graph $G_f(E,V,c)$.
+Algorithm .~\ref{alg:const} is used to construct such graph.
+Briefly speaking, besides the two completely new vertex $s$ and $t$, we construct two vertex $u_{in},u_{out}$ for each bit which is or is depended by the bits in $K$ according to the key schedule $M$, and connect them from $u_{in}$ to $u_{out}$ with a capacity of 1.
+All the other edge has its capacity of infinity, and there're three kinds of those edges:
+\begin{enumerate}
+    \item Edge from $s$ to $u_{in}$ where $u$ is in first round,
+    \item Edge from $u_{out}$ to $t$ where $u\in K$,
+    \item Edge from $u^{b}_{out}$ to $u^{b'}_{in}$ where $b$ and $b'$ are in two consecutive rounds and $b'$ depends on $b$ according to the key schedule.
+\end{enumerate}
 
-Is branched in my up strictly remember. Songs but chief has ham widow downs. Genius or so up vanity cannot. Large do tried going about water defer by. Silent son man she wished mother. Distrusts allowance do knowledge eagerness assurance additions to. 
+For a subkey set $K$ and a dependency matrix $M$ of a $n$-bit key schedule, let $R$ be the maximum round on which bits in $K$ are.
+Then the graph $G_f$ constructed by Algorithm.~\ref{alg:const} will have at most $2nR$ vertices (each bit has two vertices and there are at most $R\cdot n$ bits) and $n+|K|+nR+n^2R$ edges (consider the situation that $M$ is a full matrix).
+Currently there are many algorithms to solve Max-flow problem. The Push Relabel Algorithm (with highest label node selection rule) has its performance of $\mathcal{O}(V^2\sqrt{E})$ in time complexity, where $V$ and $E$ stands for the number of vertices and edges, respectively.
+Hence, the time complexity for our AKI - Minimum Cut algorithm will be $\mathcal{O}((2nR)^2\sqrt{n+|K|+nR+n^2R})=\mathcal{O}(n^3R^{2.5})$, which is polynomial.
+It guarantees that for most encryption methods, our algorithm can terminate in seconds.
 
-Fat son how smiling mrs natural expense anxious friends. Boy scale enjoy ask abode fanny being son. As material in learning subjects so improved feelings. Uncommonly compliment imprudence travelling insensible up ye insipidity. To up painted delight winding as brandon. Gay regret eat looked warmth easily far should now. Prospect at me wandered on extended wondered thoughts appetite to. Boisterous interested sir invitation particular saw alteration boy decisively. 
+Since the AKI-set plays the same role with the subkey set $K$ in Key Information, once there exists a leakage of Key Information, the complexity of an attack based on a guessing set $K$ (usually with a distinguisher whose input/output is the set which $K$ is generated from) will be easily reduced by replacing $K$ by its AKI-set $K'_0$.
+In this paper, we will introduce two applications based on Key Information leakage.
 
-Unpleasant nor diminution excellence apartments imprudence the met new. Draw part them he an to he roof only. Music leave say doors him. Tore bred form if sigh case as do. Staying he no looking if do opinion. Sentiments way understood end partiality and his. 
+After we quantify the key schedule with a flow network constructed by Algorithm.~\ref{alg:const}, we can further consider how to design a key schedule with the best performance in terms of AKI.
+Theoretically, for a key schedule with a $n$-bit master key and a subkey set $K$, if $|K|\geq n$, there must exist a key schedule with its dependency matrix $M$ which makes the AKI of $K$ be $n$.
+This conclusion is trivial since a full matrix (all the cells are 1) $M_{full}$ obviously meet the requirments.
+However, such a full matrix $M_{full}$ cannot be used in practical as a dependency matrix of a key schedule.
+Hence, we need to find a matrix with the number of '1's as small as possible.
+
+In this paper, we give a new algorithm to give the accurate value of AKI defined by Huang \emph{et al.}, which can be used not only to evaluate and determine the diffusion of a key schedule, but also to optimize the subkey set used in attacks like related-key attack.
+We also gives a new method to optimize and re-design a key schedule without Key Information leakage.
+To demonstrate the usefulness of those methods, we optimize the zero-correlation attack on 23-round TWINE-80 and generate a new meet-in-the-middle attack on 12-round RECTANGLE-128,
+and respectively give new key schedules for both of them which make them secure enough against their attacks.
+
+Although, to the best of our knowledge, we only provide the method of finding a possible, relatively small dependency matrix on a certain subkey set,
+we still believe that the "bridge" we built between key schedules and flow networks will work further in summarizing a scientific, theoretical and complete serial of principles on designing the key schedule for a round function.
 
 \end{bigabstract}
