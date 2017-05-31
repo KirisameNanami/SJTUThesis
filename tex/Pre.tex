@@ -86,7 +86,7 @@ $M_{MC}$矩阵中的元素以16进制表示一个在$GF(2)$上的多项式，如
 下面给出常见的几种攻击方法：
 \begin{enumerate}
     \item 由Biham和Shamir在1990年针对DES算法提出的差分密码分析\cite{biham1991differential}，通过观察具有特定输入差分的明文对经过加密后的密文对的差分形式来恢复密钥；
-    \item 由来学家教授给出的高阶差分分析\cite{lai1994higher}是一种采用了类似高阶导数概念的差分分析法，对差分函数再求差分；
+    \item 由来学嘉教授给出的高阶差分分析\cite{lai1994higher}是一种采用了类似高阶导数概念的差分分析法，对差分函数再求差分；
     \item Matsui提出的线性密码分析\cite{matsui1993linear}，如果密码算法的输入、输出比特的某个线性组合对应一个高概率偏差的线性表达式，就可以根据这个表达式来对密码算法进行恢复密钥攻击；
     \item Diffie和Hellman提出的中间相遇攻击\cite{diffie1977special}，这是一种时间-空间权衡攻击方法，是不可能差分区分器的主要寻找方法之一，本文之后会提到一个对RECTANGLE的中间相遇攻击；
     \item Knudsen基于Daemen提出的Square攻击\cite{daemen1997block}而提出的更一般形式的积分攻击\cite{knudsen2002integral}；
