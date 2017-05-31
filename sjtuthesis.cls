@@ -152,20 +152,21 @@
 % Title Settings at the section Level
 \ctexset{section={
 	format={\large\bfseries},
+	indent={2\ccwd},
 	afterskip={1.0ex \@plus .2ex},
 	}
 }
 % Title Settings at the subection Level
 \ctexset{subsection={
 	format={\bfseries\normalsize},
-	indent={0\ccwd},
+	indent={2\ccwd},
 	afterskip={1.0ex \@plus .2ex},
 	}
 }
 % Title Settings at the subsubection Level
 \ctexset{subsubsection={
 	format={\normalfont\normalsize},
-	indent={0\ccwd},
+	indent={2\ccwd},
 	afterskip={1.0ex \@plus .2ex},
 	}
 }
@@ -319,7 +320,64 @@
 \newcommand\chairman[1]{\def\sjtu@value@chairman{#1}}
 
 % “绘制”SJTU中文标题页
+\def\sjtu@underline[#1]#2{%
+  \CTEXunderline{\hbox to #1{\hfill#2\hfill}}}
+\def\sjtuunderline{\@ifnextchar[\sjtu@underline\CTEXunderline}
+\newif\ifsjtu@typeinfo \sjtu@typeinfotrue
 \renewcommand\maketitle[1]{%
+  \cleardoublepage
+  \thispagestyle{empty}
+  \begin{center}
+\begin{figure}[!htp]
+ \centering
+ \includegraphics[angle=0,origin=br,width=13cm]{sjtu.jpg}
+\end{figure}
+\heiti\zihao{-2}\sjtu@label@sjtu
+\vskip 15pt
+\kaishu\zihao{1}\sjtu@label@statement
+\vskip 5pt
+\heiti\zihao{-2}\sjtu@label@bacheloreng
+\begin{figure}[!htp]
+ \centering
+ \includegraphics[angle=0,origin=br,width=4cm]{sjtubadge.png}
+\end{figure}
+    \vskip 20pt
+    \begin{tabular}{ll}
+    \huge{\kaishu\sjtu@label@title} &\kaishu
+\sjtuunderline[350pt]{\sjtu@value@title}
+    \end{tabular}
+    \vskip 5pt
+    {\fangsong\zihao{4}}
+    \def\tabcolsep{1pt}
+    \def\arraystretch{1}
+    \begin{tabular}{lc}
+      \kaishu\sjtu@label@author &\kaishu
+      \sjtuunderline[200pt]{\sjtu@value@author}
+    \\
+      \kaishu\sjtu@label@studentnumber &\kaishu
+      \sjtuunderline[200pt]{\sjtu@value@studentnumber}
+    \\
+      \kaishu\sjtu@label@advisor &\kaishu
+      \sjtuunderline[200pt]{\sjtu@value@advisor}
+    \\  
+      \kaishu\sjtu@label@major &\kaishu
+      \sjtuunderline[200pt]{\sjtu@value@major}
+    \\  
+      \kaishu\sjtu@label@institute &\kaishu
+      \sjtuunderline[200pt]{\sjtu@value@institute}
+    \end{tabular}
+  \end{center}
+  \vskip \stretch{0.5}
+  \clearpage
+  \if@twoside
+    \thispagestyle{empty}
+    \ifsjtu@typeinfo
+    \fi
+    \cleardoublepage
+  \fi
+}
+
+\newcommand\maketitleaaa[1]{%
   \cleardoublepage
   \thispagestyle{empty}
   \begin{center}
