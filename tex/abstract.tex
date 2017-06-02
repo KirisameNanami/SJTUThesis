@@ -8,7 +8,7 @@
 分组密码中常常较为简单的密钥编排方案的低扩散程度常常会导致一些密码攻击。
 为了描述与量化这种扩散程度以分析和设计密钥编排方案，黄佳琳等人给出了以实际密钥信息（Actual Key Information）为核心的关于密钥信息的一系列概念。
 但是，现有的计算实际密钥信息的算法仍处于贪心（只能给出上界）或是简单枚举的阶段，其正确性和效率性的缺乏限制了其只能用于攻击而不能用于分析、设计编排方案。
-在本文中，我们成功地解决了AKI问题这一难题，提出了一个基于图论中著名的最大流问题的一个全新的AKI-最小割算法，同时还进一步给出了一个基于该算法的密钥编排设计方法，旨在设计出一个无密钥信息泄露的密钥编排方案来提供更强的安全性。
+在本文中，我们成功地解决了计算AKI这一难题，提出了一个基于图论中著名的最大流问题的一个全新的AKI-最小割算法，同时还进一步给出了一个基于该算法的密钥编排设计方法，旨在设计出一个无密钥信息泄露的密钥编排方案来提供更强的安全性。
 作为以上算法的应用，我们成功了优化了对23轮TWINE-80密码的多维零相关线性攻击，并提出了一个新的对12轮RECTANGLE-128的中间相遇攻击。
 同时，我们针对以上两个密码及其攻击，分别为这两个密码算法优化、设计了新的密钥编排方案，使其能够抵抗上述攻击，甚至相类似的一系列攻击。
 
@@ -21,9 +21,9 @@
     Huang \emph{et al.} gave conceptions on Key Information, especially the Actual Key Information (AKI), which successfully illustrated and quantified the method to evaluate the diffusion of a key schedule.
     However, the algorithm used to calculate AKI proposed by Huang \emph{et al.} cannot be used to determine the weakness or further make an optimization of a key schedule since it cannot give an accurate value of AKI.
     In this paper, we successfully solve the AKI problem by our AKI - Minimum Cut Algorithm based on the well-known Max-flow problem in Graph Theory,
-    and futher give a method to design a key schedule which offers better security with less or without Key Information leakage.
+    and further give a method to design a key schedule which offers better security with less or without Key Information leakage.
     As applications, we optimize the zero-correlation attack on 23-round TWINE-80 and find a new meet-in-the-middle attack on 12-round RECTANGLE-128,
-    and respectively gives a new dependency matrix for TWINE-80 and an optimized key schedule for RECTANGLE-128, which makes both of them stronger against these attacks.
+    and respectively give a new dependency matrix for TWINE-80 and an optimized key schedule for RECTANGLE-128, which makes both of them stronger against these attacks.
 
 \englishkeywords{\large Block cipher, Key schedule, Key Information, AKI, Max-flow problem, Graph Theory,
     TWINE, RECTANGLE, Design and optimization of key schedules}

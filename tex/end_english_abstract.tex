@@ -4,9 +4,9 @@ The low diffusion of a simplified key schedule in block ciphers is usually respo
     Huang \emph{et al.} gave conceptions on Key Information, especially the Actual Key Information (AKI), which successfully illustrated and quantified the method to evaluate the diffusion of a key schedule.
     However, the algorithm used to calculate AKI proposed by Huang \emph{et al.} cannot be used to determine the weakness or further make an optimization of a key schedule since it cannot give an accurate value of AKI.
     In this paper, we successfully solve the AKI problem by our AKI - Minimum Cut Algorithm based on the well-known Max-flow problem in Graph Theory,
-    and futher give a method to design a key schedule which offers better security with less or without Key Information leakage.
+    and further give a method to design a key schedule which offers better security with less or without Key Information leakage.
     As applications, we optimize the zero-correlation attack on 23-round TWINE-80 and find a new meet-in-the-middle attack on 12-round RECTANGLE-128,
-    and respectively gives a new dependency matrix for TWINE-80 and an optimized key schedule for RECTANGLE-128, which makes both of them stronger against these attacks.
+    and respectively give a new dependency matrix for TWINE-80 and an optimized key schedule for RECTANGLE-128, which makes both of them stronger against these attacks.
 
 A key schedule is an algorithm that expands a relatively short master key to a large expanded key as round keys used in encryption and decryption algorithms.
 When it comes to block ciphers, the key schedules are often simplified due to implementation considerations and cause weakness that can be exploited in many attacks, especially for lightweight block ciphers since their schedule are designed based on not only the security but also the effciency of software and hardware.
